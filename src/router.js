@@ -16,5 +16,10 @@ export default new Router({
             name: 'carrinho',
             component: () => import("./components/Carrinho")
         },
+        {
+            path: '/finaliza-pedido',
+            name: 'finaliza-pedido',
+            component: () => import("./components/FinalizaPedido")
+        },
     ]
 });

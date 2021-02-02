@@ -32,7 +32,7 @@
                             <td>
                                 {{itemCarrinho.nome}}
                             </td>
-                            <td><img :src="urlProdutos + `/` + itemCarrinho.img" alt="" style="width: 70px;"></td>
+                            <td><img :src="urlApi + pathImgProdutos + `/` + itemCarrinho.img" alt="" style="width: 70px;"></td>
                             <td>R$ {{itemCarrinho.preco}},00</td>
                             <td>
                                 <a href="#" @click="removerItem(itemCarrinho.uniqueId)">
@@ -52,8 +52,12 @@
                 <div class="card ml-auto" style="width: 18rem; margin-top: 55px;">
                     <div class="card-body text-center">
                         
-                        <p><strong>Total: R$25000,00</strong></p>
-                        <button class="btn btn-dark btn-sm">Finalizar Pedido</button>
+                        <p><strong>Total: R${{total}},00</strong></p>
+                        <router-link to="/finaliza-pedido">
+                            <a href="#" class="btn btn-dark btn-sm">
+                                Finalizar pedido
+                            </a>
+                        </router-link>
                         
                     </div>
                 </div>
@@ -73,9 +77,11 @@ export default {
 
     data(){
         return{
-             urlProdutos: "http://localhost:8000/images/produtos",
+            urlApi: "http://localhost:8000",
+            pathImgProdutos: "/images/produtos",
             itensCarrinho: [],
             lastItens: [],
+            total: 0
         }
     },
 
@@ -85,24 +91,35 @@ export default {
 
         //armazena itens em array no formato json para manipular os dados
         this.lastItens = JSON.parse(itensLocalStorage);
-        
-        // var element recebe lasItens e em seguida é percorrida para acrescentar uniqueId(identificador unico para cara item)
-         var element = this.lastItens;
 
-        for(var i = 0; i < element.length; i++){
-            element[i].uniqueId = i;
-        }
-       
        // itensCarrinho recebe os itens atualizados e com nova propriedade uniqueId
        this.itensCarrinho = this.lastItens;
 
-       console.log(this.itensCarrinho);
+        for(var i = 0; i < this.itensCarrinho.length; i++){
+            this.total= this.itensCarrinho[i].preco + this.total;
+        }
+
+        console.log(this.itensCarrinho);
+
     },
 
     methods: {
         removerItem: function(id){ //recebe o uniqueId que tem o mesmo numero do index do array
-            this.itensCarrinho.splice(this.itensCarrinho.indexOf(id), 1); //remove o elemento com o index indicado
-            console.log(this.itensCarrinho);
+
+            this.itensCarrinho.splice(id, 1); //remove o elemento com o index indicado
+
+            //percorrendo array itensCarrinho e atribuindo valor uniqueId de maneira ordenada
+            for(var i = 0; i < this.itensCarrinho.length; i++){
+                this.itensCarrinho[i].uniqueId = i;
+            } 
+
+            //itensArray recebe itensCarrinho em formato de array
+            var itensArray = JSON.stringify(this.itensCarrinho);
+
+            //atualizando localStorage
+            localStorage.setItem('carrinho', itensArray);
+
+            window.location.reload();
         }
     }
 

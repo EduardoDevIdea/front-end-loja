@@ -65,8 +65,15 @@ export default {
                 console.log(this.itensCarrinho);
             }
 
-            //adiciona novo produto no array, junto aos itens anteriores e em seguida todos os itens em localStorage novamente
+            //adiciona novo produto no array, junto aos itens anteriores
             this.itensCarrinho.push(produto);
+
+            //percorre array e adiciona uniqueId correspondente ao index do array (será utilizado como identificador unico para cada produto)
+            for(var i = 0; i < this.itensCarrinho.length; i++){
+                this.itensCarrinho[i].uniqueId = i;
+            }
+
+            // armazena itens em localStorage
             var itensArray = JSON.stringify(this.itensCarrinho);
             localStorage.setItem('carrinho', itensArray);
         }
