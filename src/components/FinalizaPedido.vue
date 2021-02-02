@@ -99,7 +99,7 @@ export default {
             }).then( res => {
                 console.log(res.data);
                 localStorage.clear();
-                window.alert("Pedido realizado com sucesso! Entraremos em contato através do e-mail com as instruções de pagamento. Obrigado!");
+                window.alert(res.data.message);
                 this.$router.push("/");
             }).catch( e => {
                 console.log(e);
