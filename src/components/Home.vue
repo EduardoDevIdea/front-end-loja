@@ -3,7 +3,6 @@
     <div class=" container mt-5">
 
       <div class="row mb-5 justify-content-end">
-          <!--router-link to="/" class="btn btn-outline-dark btn-sm">HOME</router-link-->
         <router-link to="/carrinho">
             <img src="../assets/shopping-cart-solid.svg" alt="" style="width: 40px; height: 40px;">
         </router-link>
@@ -11,8 +10,7 @@
 
       <div class="row">
 
-
-        <div v-for="produto in produtos" :key="produto.id" class="col-4 mb-5">
+        <div v-for="produto in produtos" :key="produto.id" class=" col-lg-4 col-md-6 col-sm-12 mb-5">
           <div class="card mx-auto" style="width: 18rem;">
             <img :src="urlProdutos + `/` + produto.img" class="card-img-top mx-auto" alt="..." style="width: 250px; height: 250px;">
             <div class="card-body text-center">
@@ -33,20 +31,24 @@
 
 <script>
 import axios from 'axios';
+import urlApi from '../urlApi';
+
+const url = urlApi;
 
 export default {
     name: "Home",
 
     data(){
         return{
-            urlProdutos: "http://localhost:8000/images/produtos",
+            urlProdutos: url + "/images/produtos",
             produtos: [],
             itensCarrinho: [],
         }
     },
 
+    //retorna todos os produtos
     created: function(){
-        axios.get("http://localhost:8000/api/produtos").then(res => {
+        axios.get( url + "/api/produtos").then(res => {
             this.produtos = res.data;
         }).catch(e => {
             console.log(e);

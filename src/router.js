@@ -21,5 +21,15 @@ export default new Router({
             name: 'finaliza-pedido',
             component: () => import("./components/FinalizaPedido")
         },
+        {
+            path: '/vendas',
+            name: 'vendas',
+            component: () => import("./components/Vendas")
+        },
+        {
+            path: '/show-venda/:id',
+            name: 'show-venda',
+            component: () => import("./components/ShowVenda")
+        },
     ]
 });

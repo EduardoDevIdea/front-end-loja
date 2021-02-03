@@ -13,7 +13,7 @@
         <div class="row w-75 mt-5 mx-auto">
 
             <!-- FORM CONFIRMA PEDIDO -->
-            <form class="col-8">
+            <form class="col-md-8 col-sm-12">
                <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
                     <input v-model="cliente.nome" type="text" class="form-control" id="nome" aria-describedby="textlHelp" required>
@@ -29,7 +29,7 @@
             <!-- END FORM CONFIRMA PEDIDO -->
 
             <!-- CONFERE PEDIDO -->
-            <div class="class col-3" style="margin-top: 25px;">
+            <div class="class col-md-3 col-sm-12" style="margin-top: 25px;">
 
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
@@ -53,13 +53,16 @@
 
 <script>
 import axios from 'axios';
+import urlApi from '../urlApi';
+
+const url = urlApi;
 
 export default {
     name: "FinalizaPedido",
 
     data(){
         return{
-            urlApi: "http://localhost:8000",
+            urlApi: url,
             rota: "",
             itensCarrinho: [],
             lastItens: [],
@@ -72,6 +75,7 @@ export default {
     },
 
     created: function(){
+        
         //armazena itens do localStorage em variavel
         var itensLocalStorage = localStorage.getItem('carrinho');
 
@@ -90,23 +94,19 @@ export default {
     methods: {
         confirmar: function(){
 
-            console.log(this.total);
-
-            axios.post("http://localhost:8000/api/venda", {
+            axios.post( url + "/api/venda", {
                 cliente: this.cliente,
                 pedido: this.itensCarrinho,
                 total: this.total,
             }).then( res => {
                 console.log(res.data);
-                localStorage.clear();
+                localStorage.setItem('carrinho', '');
                 window.alert(res.data.message);
                 this.$router.push("/");
             }).catch( e => {
                 console.log(e);
                 window.alert("Erro ao finalizar seu pedido: Tente novamente e entre em contato conosco, se o erro persistir")
-            });
-
-            
+            });    
         }
     }
 }

@@ -1,6 +1,5 @@
 <template>
     
-   
     <div id="conteudo-tela" class="container pt-5">
 
         <div class="row justify-content-end">
@@ -10,7 +9,7 @@
         <div class="row w-100 mt-3">
 
             <!-- CARRINHO -->
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 <div class="row mb-3">
                     <div class="col-6">
                         <h3>Meu carrinho</h3>
@@ -48,7 +47,7 @@
             <!-- END CARRINHO -->
       
             <!-- FINALIZAR PEDIDO -->
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="card ml-auto" style="width: 18rem; margin-top: 55px;">
                     <div class="card-body text-center">
                         
@@ -67,17 +66,20 @@
         </div>
         
     </div>
-    
 
 </template>
 
 <script>
+import urlApi from '../urlApi';
+
+const url = urlApi;
+
 export default {
     name: "Carrinho",
 
     data(){
         return{
-            urlApi: "http://localhost:8000",
+            urlApi: url,
             pathImgProdutos: "/images/produtos",
             itensCarrinho: [],
             lastItens: [],
@@ -89,18 +91,21 @@ export default {
         //armazena itens do localStorage em variavel
         var itensLocalStorage = localStorage.getItem('carrinho');
 
-        //armazena itens em array no formato json para manipular os dados
-        this.lastItens = JSON.parse(itensLocalStorage);
+        if(itensLocalStorage != null){
 
-       // itensCarrinho recebe os itens atualizados e com nova propriedade uniqueId
-       this.itensCarrinho = this.lastItens;
+            //armazena itens em array no formato json para manipular os dados
+            this.lastItens = JSON.parse(itensLocalStorage);
 
-        for(var i = 0; i < this.itensCarrinho.length; i++){
-            this.total= this.itensCarrinho[i].preco + this.total;
+            // itensCarrinho recebe os itens atualizados e com nova propriedade uniqueId
+            this.itensCarrinho = this.lastItens;
+
+            for(var i = 0; i < this.itensCarrinho.length; i++){
+                this.total = this.itensCarrinho[i].preco + this.total;
+            }
+        }else{
+            alert('Seu carrinho está vazio!');
+            this.$router.push('/');
         }
-
-        console.log(this.itensCarrinho);
-
     },
 
     methods: {
