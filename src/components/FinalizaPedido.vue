@@ -99,8 +99,8 @@ export default {
                 pedido: this.itensCarrinho,
                 total: this.total,
             }).then( res => {
-                console.log(res.data);
-                localStorage.setItem('carrinho', '');
+                localStorage.clear();
+                localStorage.setItem('senha', 'admin');
                 window.alert(res.data.message);
                 this.$router.push("/");
             }).catch( e => {

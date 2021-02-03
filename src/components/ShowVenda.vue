@@ -66,7 +66,6 @@ import urlApi from '../urlApi';
 
 const url = urlApi;
 
-
 export default {
     name: "ShowVenda",
 
@@ -97,7 +96,6 @@ export default {
             axios.post( url + "/api/pagamento", {
                 id: this.idVenda
             }).then( res => {
-                console.log(res);
                 alert(res.data.message);
                 window.location.reload();
             }).catch( e => {

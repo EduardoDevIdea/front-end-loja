@@ -78,6 +78,8 @@ export default {
             // armazena itens em localStorage
             var itensArray = JSON.stringify(this.itensCarrinho);
             localStorage.setItem('carrinho', itensArray);
+
+            alert("Item adicionado ao carrinho");
         }
     },
 }

@@ -10,6 +10,12 @@
     <!-- Tabela Vendas-->
     <div class="row-100 pt-5">
 
+        <div v-if="vendas == '' " class="row mb-4">
+            <h4>
+                Nenhuma venda registrada até o momento.
+            </h4>
+        </div>
+
         <table class="table">
             <thead class="thead-dark">
                 <th>nº</th>
@@ -54,11 +60,13 @@ export default {
 
     data(){
         return {
-            vendas: [],
+            vendas: "",
         }
     },
 
     created: function(){
+
+        console.log(this.vendas);
 
         var acesso = localStorage.getItem('acesso');
         if(acesso == 'garantido'){

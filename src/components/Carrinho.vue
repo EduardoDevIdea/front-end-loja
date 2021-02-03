@@ -123,8 +123,9 @@ export default {
 
             //atualizando localStorage
             localStorage.setItem('carrinho', itensArray);
-
+            
             window.location.reload();
+           
         }
     }
 
